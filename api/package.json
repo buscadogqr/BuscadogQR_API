@@ -4,9 +4,7 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-      "start": "nodemon -L",
-      "server": "json-server -p 3001 --watch db.json",
-      "test": "echo \"Error: no test specified\" && exit 1"
+      "start": "node index.js"
     },
     "keywords": [],
     "author": "",

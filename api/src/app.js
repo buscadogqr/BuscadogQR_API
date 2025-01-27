@@ -9,6 +9,12 @@ require('./db.js');
 const server = express();
 const cors = require('cors');
 
+
+server.use(cors({
+  origin: ['https://buscadogqr.vercel.app/', 'http://localhost:3000'], // Reemplaza con tu dominio y el puerto de desarrollo si es necesario.
+  credentials: true,
+}));
+
 server.name = 'API';
 
 server.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));

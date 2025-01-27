@@ -20,7 +20,7 @@ router.get("/", async (req, res) => {
 router.post("/", async (req, res) => {
     try {
 
-        const pet = req.body;
+        const pet = req.query;
         
         res.status(200).json(await createPet(pet));
         

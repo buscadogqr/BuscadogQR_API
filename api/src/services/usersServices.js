@@ -41,32 +41,30 @@ async function getAllUsers(userId, userMail, userName) {
 async function createUser(user) {
     try {
 
-        await Users.bulkCreate(user);
+        let createdUser = {};
 
-        // let createdUser = {};
+        const check = await Users.findOne({
+            where: {
+                mail: user.mail
+            }
+        });
 
-        // const check = await Users.findOne({
-        //     where: {
-        //         mail: user.mail
-        //     }
-        // });
+        if(check) {
+            return `El usuario ${user.mail} ya se encuentra registrado`;
 
-        // if(check) {
-        //     return `El usuario ${user.mail} ya se encuentra registrado`;
+        } else {
+            await Users.create(user)
+            .then(async data => {
+                const users = await Users.findAll();
+                const others = await Others.findByPk(1) 
+                await others.update({ statistics: [{ users: users.length, pets: others.statistics[0].pets }] });
 
-        // } else {
-        //     await Users.create(user)
-        //     .then(async data => {
-        //         const users = await Users.findAll();
-        //         const others = await Others.findByPk(1) 
-        //         await others.update({ statistics: [{ users: users.length, pets: others.statistics[0].pets }] });
+                createdUser = data;
+            })
 
-        //         createdUser = data;
-        //     })
-
-        //     return createdUser;
+            return createdUser;
     
-        // }
+        }
 
     } catch (error) {
         

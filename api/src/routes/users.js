@@ -20,7 +20,7 @@ router.get("/", async (req, res) => {
 router.post("/", async (req, res) => {
     try {
 
-        const user = req.body;
+        const user = req.query;
         
         res.status(200).json(await createUser(user));
         

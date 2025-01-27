@@ -33,32 +33,34 @@ async function getAllPets(petId, petName) {
 async function createPet(pet) {
     try {
 
-        if(!pet.name) {
-            await Pets.create(pet);
+        await Pets.bulkCreate(pet);
 
-        } else {
-            const user = await Users.findOne({
-                where: {
-                    mail: pet.userOwner
-                }
-            });
+        // if(!pet.name) {
+        //     await Pets.create(pet);
+
+        // } else {
+        //     const user = await Users.findOne({
+        //         where: {
+        //             mail: pet.userOwner
+        //         }
+        //     });
             
-            if(!user) {
-                return `El usuario ${pet.userOwner} no está registrado`;
-            } else {
+        //     if(!user) {
+        //         return `El usuario ${pet.userOwner} no está registrado`;
+        //     } else {
     
-                const todayDate = new Date();
-                const acquired = todayDate.getDate() + "-" + (todayDate.getMonth() + 1) + "-" + todayDate.getFullYear();    
+        //         const todayDate = new Date();
+        //         const acquired = todayDate.getDate() + "-" + (todayDate.getMonth() + 1) + "-" + todayDate.getFullYear();    
     
-                await Pets.create(pet)
-                await user.update({ memberships: [ ...user.memberships, { acquired, pet: pet.name } ] });
+        //         await Pets.create(pet)
+        //         await user.update({ memberships: [ ...user.memberships, { acquired, pet: pet.name } ] });
     
-                const pets = await Pets.findAll();
-                const others = await Others.findByPk(1) 
-                await others.update({ statistics: [{ users: others.statistics[0].users, pets: pets.length }] })
-            }
+        //         const pets = await Pets.findAll();
+        //         const others = await Others.findByPk(1) 
+        //         await others.update({ statistics: [{ users: others.statistics[0].users, pets: pets.length }] })
+        //     }
 
-        }
+        // }
 
     } catch (error) {
         
